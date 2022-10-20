@@ -119,3 +119,16 @@ FROM current_emp AS ce
 		ON (ce.emp_no = de.emp_no)
 	INNER JOIN departments as d
 		ON (de.dept_no = d.dept_no);
+
+-- Create a table with information requested by Sales and Development.
+SELECT ei.emp_no,
+	ei.first_name,
+	ei.last_name,
+	d.dept_name
+INTO sales_dev_emp
+FROM emp_info AS ei
+	INNER JOIN dept_emp AS de
+		ON (ei.emp_no = de.emp_no)
+	INNER JOIN departments AS d
+		ON (de.dept_no = d.dept_no)
+WHERE d.dept_name IN ('Sales', 'Development');
