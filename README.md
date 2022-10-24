@@ -239,7 +239,35 @@ The result shows plenty of senior-ranked potential mentors in every department, 
 One particular question still remaining revolves around the salary of the workforce; the salary situation can have a very significant impact on how the company will fare in preparing for the future. A quick check of the salaries table proved very alarming after seeing that the **LATEST UPDATES in salaires were on FEB-01-2000**. A more detailed query (included in the `extra_queries` script) will calculate the average salaries and find the max and min salaries by department and title. A Common Table Expression (CTE) filters the salaries table to take only the latest salary from only those currently employed.
 
 ```
-
+-- See how salary looks by job title and department.
+WITH latest_salary AS (SELECT DISTINCT ON (s.emp_no) s.emp_no,
+					   s.salary
+					   FROM salaries AS s
+					   INNER JOIN dept_emp AS de
+					   	ON s.emp_no = de.emp_no
+					   WHERE de.to_date = '9999-01-01'
+					   ORDER BY s.emp_no,
+					   s.to_date DESC)
+SELECT d.dept_name AS "Department",
+	d.dept_no AS "Dept. No.",
+	ti.title AS "Job Title",
+	ROUND(AVG(ls.salary)) AS "Avg. Salary",
+	MIN(ls.salary) AS "Min. Salary",
+	MAX(ls.salary) AS "Max. Salary"
+INTO salary_dist
+FROM employees AS e
+	INNER JOIN dept_emp AS de
+		ON e.emp_no = de.emp_no
+	INNER JOIN departments AS d
+		ON de.dept_no = d.dept_no
+	INNER JOIN titles AS ti
+		ON e.emp_no = ti.emp_no
+	INNER JOIN latest_salary AS ls
+		ON e.emp_no = ls.emp_no
+WHERE (ti.to_date = '9999-01-01')
+GROUP BY d.dept_no,
+	ti.title
+ORDER BY d.dept_no ASC;
 ```
 
 - Export 13: salary_dist.csv
