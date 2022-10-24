@@ -1,0 +1,36 @@
+Department,Dept. No.,Job Title,Potential Mentors
+Marketing,d001,Senior Staff,104
+Marketing,d001,Staff,22
+Finance,d002,Senior Staff,61
+Finance,d002,Staff,13
+Human Resources,d003,Senior Staff,86
+Human Resources,d003,Staff,21
+Production,d004,Assistant Engineer,33
+Production,d004,Engineer,208
+Production,d004,Senior Engineer,73
+Production,d004,Senior Staff,5
+Production,d004,Staff,2
+Production,d004,Technique Leader,35
+Development,d005,Assistant Engineer,40
+Development,d005,Engineer,257
+Development,d005,Senior Engineer,93
+Development,d005,Senior Staff,9
+Development,d005,Staff,2
+Development,d005,Technique Leader,34
+Quality Management,d006,Assistant Engineer,8
+Quality Management,d006,Engineer,58
+Quality Management,d006,Senior Engineer,21
+Quality Management,d006,Technique Leader,10
+Sales,d007,Senior Staff,210
+Sales,d007,Staff,62
+Research,d008,Engineer,16
+Research,d008,Senior Engineer,3
+Research,d008,Senior Staff,70
+Research,d008,Staff,22
+Research,d008,Technique Leader,2
+Customer Service,d009,Assistant Engineer,1
+Customer Service,d009,Engineer,10
+Customer Service,d009,Senior Engineer,4
+Customer Service,d009,Senior Staff,85
+Customer Service,d009,Staff,25
+Customer Service,d009,Technique Leader,3

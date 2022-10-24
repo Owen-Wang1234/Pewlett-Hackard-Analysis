@@ -66,14 +66,14 @@ Looking at the exported CSV files in the Challenge Deliverables, some incredible
 
 3. Given the conditions for eligibility for retirement (born between 1952 and 1955 and then hired between 1985 and 1988) as well as the progression of titles, the fact that there are 7,636 Staff and 1,090 Assistant Engineers among the numbers brings alarming implications about how these employees remained at these ranks for almost their entire career duration.
 
-4. Looking at the Deliverable 2 CSV file, a good number of the staff eligible for mentorship are in higher ranks (Senior Engineer, Senior Staff, and Technique Leader), but there are some that are not senior rank, although they may aid in mentorship with new hires.
+4. Looking at the Deliverable 2 CSV file, a good number of the staff eligible for mentorship are in more experienced ranks (Engineer, Senior Engineer, Senior Staff, and Technique Leader), but there are some that are not senior rank, although they may aid in mentorship with new hires.
 
 ## Summary
 
 As Deliverable 1 shows, if every employee eligible for retirement chooses to retire the company will lose:
 
 | Job Title | Employees |
-| :--- | ---: |
+| --- | ---: |
 | Senior Engineer | 25,916 |
 | Senior Staff | 24,926 |
 | Engineer | 9,285 |
@@ -83,9 +83,21 @@ As Deliverable 1 shows, if every employee eligible for retirement chooses to ret
 | Manager | 2 |
 | **TOTAL** | **72,458** |
 
-One count query of employees still currently employed with the company yields a count of 240,124, so that means *almost **30%** of the currently active workforce is eligible for retirement.
+One count query of employees still currently employed with the company yields a count of 240,124, so that means *almost **30%** of the currently active workforce is eligible for retirement*.
 
-When the query for Deliverable 2 was tested prior to outputting into a new table, the output mentioned that **1,549** rows were produced. Considering that **up to 72,458 employees** may retire, it is very unlikely that the number of eligible mentors will be anywhere near sufficient *even if every employee eligible for mentorship **agrees** to become a mentor*.
+As the query for Deliverable 2 was set up for outputting into a new table, a quick side query afterwards to count up the numbers showed this:
+
+| Job Title | Employees |
+| --- | ---: |
+| Assistant Engineer | 78 |
+| Engineer | 501 |
+| Senior Engineer | 169 |
+| Senior Staff	| 568 |
+| Staff | 156 |
+| Technique Leader | 77 |
+| **TOTAL** | **1,549** |
+
+The mentorship eligibility count showed that more than 500 are in the Engineering and Senior Staff roles each with more than 150 in the Senior Engineering and Staff roles with the rest in the Assistant Engineer and Technique Leader roles; none of the managers are eligible for mentorship. Considering that **up to 72,458 employees** may retire, it is very unlikely that the number of eligible mentors will be anywhere near sufficient *even if every employee eligible for mentorship **agrees** to become a mentor*.
 
 These three queries (included in the `extra_queries` script) examine the workforce distribution and retirement-ready percentage by department and by job title and the distribution of job titles across the departments:
 
@@ -142,7 +154,8 @@ FROM employees AS e
 		ON (e.emp_no = ut.emp_no)
 WHERE (de.to_date = '9999-01-01')
 AND (ti.to_date = '9999-01-01')
-GROUP BY d.dept_no, ti.title
+GROUP BY d.dept_no,
+	ti.title
 ORDER BY d.dept_no ASC;
 ```
 
@@ -154,7 +167,7 @@ The results (illustrated below) are exported for easy access.
 
 - Export 9: title_dist.csv
 
-![Employee distribution by title](https://github.com/Owen-Wang1234/Pewlet-Hackard-Analysis/blob/main/Data/title_dist.png)
+![Employee distribution by title](https://github.com/Owen-Wang1234/Pewlett-Hackard-Analysis/blob/main/Data/title_dist.png)
 
 - Export 10: dept_title.csv
 
@@ -185,11 +198,56 @@ FROM employees AS e
 	INNER JOIN titles AS ti
 		ON e.emp_no = ti.emp_no
 WHERE de.to_date = '9999-01-01'
-ORDER BY d.dept_no ASC, e.emp_no ASC, ti.to_date DESC;
+ORDER BY d.dept_no ASC,
+	e.emp_no ASC,
+	ti.to_date DESC;
 ```
 
 - Export 11: manager_tracking.csv
 
 ![The management carousel](https://github.com/Owen-Wang1234/Pewlett-Hackard-Analysis/blob/main/Data/manager_tracking.png)
 
-The result shows that employees appear to do some time in management and then step down into a different role while another fills in for a period until one stays a manager up to today; this is particularly pronounced in Production, Quality, and Customer Service where multiple employees take turns as manager.
+The result shows that employees appear to do some time in management and then step down into a different role while another fills in for a period until one stays a manager up to today; this is particularly pronounced in Production, Quality, and Customer Service where multiple employees take turns as manager. If the manager role is going to be considered a temporary role that is rotated among qualified employees, then expanding the management team can make leadership easier since one manager does not have to lead and direct the entire department. This may also help mitigate the issue of lack of mobility seen with some of the retirement-ready employees not in senior roles despite their long duration of employment.
+
+The issue of mentorship is investigated with this query below (added in the `extra_queries` script). It is similar to the one used to create Export 10, but adjusted to use the mentorship eligiblity table. Some extra edits can focus on departments and titles.
+
+```
+-- See the distribution of potential mentors by job title and department.
+SELECT d.dept_name AS "Department",
+	d.dept_no AS "Dept. No.",
+	me.title AS "Job Title",
+	COUNT(me.emp_no) AS "Potential Mentors"
+INTO mentor_dist
+FROM mentorship_eligibility AS me
+	INNER JOIN dept_emp AS de
+		ON me.emp_no = de.emp_no
+	INNER JOIN departments AS d
+		ON de.dept_no = d.dept_no
+GROUP BY d.dept_no,
+	me.title
+ORDER BY d.dept_no ASC;
+```
+
+- Export 12: mentor_dist.csv
+
+![Potential mentor distribution](https://github.com/Owen-Wang1234/Pewlett-Hackard-Analysis/blob/main/Data/mentor_dist.png)
+
+![Distribution by dept](https://github.com/Owen-Wang1234/Pewlett-Hackard-Analysis/blob/main/Data/mentor_dept.png)
+
+The result shows plenty of senior-ranked potential mentors in every department, but the number of potential mentors is weighted towards Production and Development and Sales which is consistent with the number of current personnel.
+
+One particular question still remaining revolves around the salary of the workforce; the salary situation can have a very significant impact on how the company will fare in preparing for the future. A quick check of the salaries table proved very alarming after seeing that the **LATEST UPDATES in salaires were on FEB-01-2000**. A more detailed query (included in the `extra_queries` script) will calculate the average salaries and find the max and min salaries by department and title. A Common Table Expression (CTE) filters the salaries table to take only the latest salary from only those currently employed.
+
+```
+
+```
+
+- Export 13: salary_dist.csv
+
+![Salary distribution](https://github.com/Owen-Wang1234/Pewlett-Hackard-Analysis/blob/main/Data/salary_dist.png)
+
+The most immediately alarming observation is that most of the average salaries fall below $50,000 per year; the three departments with average salaries above this are Marketing, Finance, and Sales.
+
+It is also jarring to see that despite filtering to get the latest salary for each employee, the minimum salary is still $40,000 per year, and especially for **FOUR DEPARTMENT MANAGERS** (Human Resources, Development, Production, and Customer Service)! This is followed by noticing that the only the Marketing department has the manager salary greater than the average salary of the other job titles.
+
+Not only is the number of potential mentors much less than the number of employees that may retire, but the fact the salaries have not been updated since the year 2000 will make employee retention a difficult matter if non-retiring employees decide to ply their skills and experience with another employer that pays more **AND** actually provides regular raises. Employees eligible for mentorship may be particularly recalcitrant about staying to become mentors if the salary situation is not remedied immediately, especially when checking the salaries of these employees.

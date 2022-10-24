@@ -1,0 +1,46 @@
+Department,Dept. No.,Job Title,Avg. Salary,Min. Salary,Max. Salary
+Marketing,d001,Manager,69941,69941,69941
+Marketing,d001,Senior Staff,61142,40000,116412
+Marketing,d001,Staff,60918,40000,118250
+Finance,d002,Manager,52070,52070,52070
+Finance,d002,Senior Staff,59684,40000,113236
+Finance,d002,Staff,59027,40000,114784
+Human Resources,d003,Manager,40000,40000,40000
+Human Resources,d003,Senior Staff,44703,40000,110308
+Human Resources,d003,Staff,44742,40000,101593
+Production,d004,Assistant Engineer,48664,40000,90676
+Production,d004,Engineer,48893,40000,99378
+Production,d004,Manager,40000,40000,40000
+Production,d004,Senior Engineer,48794,40000,104390
+Production,d004,Senior Staff,46207,40000,86647
+Production,d004,Staff,46494,40000,88124
+Production,d004,Technique Leader,48888,40000,104065
+Development,d005,Assistant Engineer,48735,40000,99683
+Development,d005,Engineer,48723,40000,100683
+Development,d005,Manager,40000,40000,40000
+Development,d005,Senior Engineer,48722,40000,110449
+Development,d005,Senior Staff,46408,40000,94983
+Development,d005,Staff,46654,40000,86564
+Development,d005,Technique Leader,48672,40000,95198
+Quality Management,d006,Assistant Engineer,46464,40000,82397
+Quality Management,d006,Engineer,46325,40000,86017
+Quality Management,d006,Manager,45169,45169,45169
+Quality Management,d006,Senior Engineer,46434,40000,95634
+Quality Management,d006,Technique Leader,46514,40000,91675
+Sales,d007,Manager,71148,71148,71148
+Sales,d007,Senior Staff,69834,40000,129492
+Sales,d007,Staff,69862,40000,127041
+Research,d008,Assistant Engineer,49918,40000,81210
+Research,d008,Engineer,49026,40000,88385
+Research,d008,Manager,48077,48077,48077
+Research,d008,Senior Engineer,48618,40000,102661
+Research,d008,Senior Staff,48877,40000,102591
+Research,d008,Staff,49032,40000,102517
+Research,d008,Technique Leader,47862,40000,85429
+Customer Service,d009,Assistant Engineer,50202,40000,80362
+Customer Service,d009,Engineer,48630,40000,89464
+Customer Service,d009,Manager,40000,40000,40000
+Customer Service,d009,Senior Engineer,48853,40000,94124
+Customer Service,d009,Senior Staff,47747,40000,122423
+Customer Service,d009,Staff,48132,40000,117948
+Customer Service,d009,Technique Leader,48448,40000,88015
